@@ -1,0 +1,29 @@
+@startuml
+hide empty description
+state "Backlog" as Backlog
+state "To Do" as Todo
+state "In Progress" as Progress
+state "In Review" as Review
+state "Done" as Done
+state "Archived" as Archived
+state "Blocked" as Blocked
+[*] --> Backlog
+Backlog --> Todo : Admin or Manager / assigned user
+Todo --> Progress : Allowed role / assigned user / fewer than 5 active
+Progress --> Todo : Assigned user
+Progress --> Review : Manager or Admin / assigned user
+Review --> Done : Manager or Admin / assigned user
+Done --> Todo : Admin / assigned user / special Return action
+Done --> Archived : Automatic archive
+Archived --> Todo : Admin / assigned user / special Return action
+[*] <-- Archived
+Backlog --> Blocked : Admin / assigned user
+Todo --> Blocked : Admin / assigned user
+Progress --> Blocked : Admin / assigned user
+Review --> Blocked : Admin / assigned user
+note right of Blocked
+  Manual exit is forbidden.
+  Cross-project drag-and-drop is forbidden.
+  Every manual drag-and-drop also requires task assignment.
+end note
+@enduml

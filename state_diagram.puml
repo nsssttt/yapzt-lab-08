@@ -1,0 +1,17 @@
+@startuml
+hide empty description
+[*] --> Search
+Search --> SelectNumber : numbers are available, select a number
+Search --> Cancelled : cancel
+SelectNumber --> Payment : confirm selection
+SelectNumber --> Cancelled : cancel
+Payment --> Confirmation : payment succeeds
+Payment --> Payment : payment is declined
+Payment --> Cancelled : cancel booking
+Confirmation --> [*]
+Cancelled --> [*]
+note right of SelectNumber
+Transition to confirmation
+without successful payment is forbidden
+end note
+@enduml
